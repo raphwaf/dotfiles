@@ -1,0 +1,35 @@
+gnmap() {
+    [ $# -eq 0 ] && { echo "usage: gnmap <file.gnmap> [file2.gnmap ...]"; return 1; }
+
+    local C=1
+    [ -t 1 ] || C=0          # no colors when piped/redirected
+
+    awk -v c="$C" '
+    BEGIN {
+        FS = "\t"
+        if (c) { H="\033[1;36m"; P="\033[1;32m"; S="\033[33m"; R="\033[0m" }
+    }
+    /Ports:/ {
+        split($1, h, " ")
+        host = h[2]
+        name = (h[3] != "()") ? h[3] : ""
+
+        for (f = 1; f <= NF; f++)
+            if ($f ~ /^Ports: /) pf = substr($f, 8)
+
+        n = split(pf, ports, ", ")
+        out = ""
+        for (i = 1; i <= n; i++) {
+            split(ports[i], p, "/")
+            if (p[2] != "open") continue
+            ver = p[7]
+            for (j = 8; j in p; j++) ver = ver "/" p[j]
+            out = out sprintf("  %s%-9s%s %s%-18s%s %s\n", \
+                  P, p[1] "/" p[3], R, S, p[5], R, ver)
+        }
+        if (out != "") printf "%s%s%s %s\n%s\n", H, host, R, name, out
+    }' "$@"
+}
+
+
+

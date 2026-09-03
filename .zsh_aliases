@@ -1,0 +1,49 @@
+alias szsh='source ~/.zshrc'
+
+alias sysupdate='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo snap refresh'
+alias offsec='sudo openvpn --config /home/pashosh/Documents/VPNs/offsec.ovpn'
+
+alias resetkde='kquitapp6 plasmashell && kstart plasmashell'
+
+
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+
+alias ll='ls -lah --color=auto --group-directories-first'
+alias lt='ls -lahtr --color=auto'          # אחרונים למטה
+alias lsize='du -sh * | sort -rh | head -20'
+
+alias grep='grep --color=auto'
+alias mkdir='mkdir -pv'
+alias df='df -hT'
+alias ports='ss -tulpn'
+alias psg='ps aux | grep -v grep | grep -i'
+
+
+
+#alias -s {yml,yaml,json,conf,cfg,ini,md,txt}=nvim
+#alias -s {ps1,py,sh}=nvim
+
+alias -g G='| grep -i --color=auto'
+alias -g L='| less -R'
+alias -g NE='2>/dev/null'
+alias -g NUL='>/dev/null 2>&1'
+alias -g C='| xsel --clipboard --input'
+alias -g H='| head -50'
+alias -g W='| wc -l'
+
+alias wgup='sudo wg-quick up wg0'
+alias wgdown='sudo wg-quick down wg0'
+alias wgs='sudo wg show'
+alias dnss='resolvectl status'
+alias updog='sudo /home/pashosh/.local/bin/updog'
+
+alias superecon='sudo /home/pashosh/Desktop/tools/supeRECON/supeRECON.sh' 
+
+setopt AUTO_CD        # typing a directory name cds into it
+setopt AUTO_PUSHD  
+alias -- -='cd -'
+alias .. .='cd ..'
+
+
