@@ -32,4 +32,51 @@ gnmap() {
 }
 
 
+mkmachine() {
+    if [ -z "$1" ]; then
+        echo "[!] Error: Missing machine name."
+        echo "[-] Usage: mkmachine <machine_name>"
+        return 1
+    fi
 
+    local target_dir="$1"
+
+    mkdir -p "$target_dir"/{recon,exploits,privesc,loot}
+    echo "# $1 - Machine Notes" > "$target_dir/notes.md"
+    
+    cd "$target_dir" || return
+    
+    git init -q
+
+    cat <<EOF > .gitignore
+*.o
+*.obj
+*.out
+*.bin
+*.so
+*.dll
+*.a
+*.lib
+*.exe
+*.app
+*.pcap
+*.pcapng
+*.ova
+*.vmdk
+*.qcow2
+*.dict
+*.wordlist
+*.gnmap
+*.nmap
+*.xml
+.DS_Store
+Thumbs.db
+EOF
+
+    echo "[+] Directory structure and Git repository created at: $(pwd)"
+    
+    git add .
+    git commit -q -m "Initial commit: Directory structure for $1"
+    
+    ls -la
+}
